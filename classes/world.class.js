@@ -13,11 +13,15 @@ class World {
         new Collectables(),
         new Collectables(),
         new Collectables(),
+        new Collectables(),
+        new Collectables(),
+        new Collectables(),
         new Collectables()
     ];
     throwableObjects = [
         new ThrowableObject()
     ];
+    drawableObject = new DrawableObject();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,6 +41,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkCollection();
         }, 200);
     }
 
@@ -55,7 +60,18 @@ class World {
                     this.statusbarHealth.setPercentage(this.character.energy);
                 }
             });
-        }, 300);
+        }, 1000);
+    }
+
+    checkCollection() {
+        this.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle) && this.statusbarBottle.bottles < 100) {
+                this.statusbarBottle.isCollected();
+                this.statusbarBottle.setPercentage(this.statusbarBottle.bottles);
+                this.bottles.splice(index, 1);
+            }
+        });
+        console.log(this.statusbarBottle.bottles);
     }
 
     // draw() wird immer wieder ausgeführt

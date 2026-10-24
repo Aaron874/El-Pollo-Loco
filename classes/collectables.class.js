@@ -12,6 +12,6 @@ class Collectables extends DrawableObject {
         super();
         let index = Math.floor(Math.random() * this.IMAGES_BOTTLE.length);
         this.loadImage(this.IMAGES_BOTTLE[index]);
-        this.x = 200 + Math.random() * 2850;
+        this.x = 200 + Math.random() * 2150;
     }
 }

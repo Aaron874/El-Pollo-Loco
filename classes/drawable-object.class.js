@@ -6,6 +6,7 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    bottles = 0;
 
     loadImage(path) {
         this.img = new Image();
@@ -25,7 +26,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Chicken || this instanceof Character) {
+        if (this instanceof Chicken || this instanceof Character || this instanceof Collectables) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -34,4 +35,10 @@ class DrawableObject {
         }
     }
 
+    isCollected() {
+        this.bottles += 20;
+        if (this.bottles > 100) {
+            this.bottles = 100;
+        }
+    }
 }
