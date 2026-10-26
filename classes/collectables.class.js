@@ -8,10 +8,18 @@ class Collectables extends DrawableObject {
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
 
-    constructor() {
+    IMAGES_COIN = [
+        'img/8_coin/coin_1.png'
+    ];
+
+    constructor(type) {
         super();
-        let index = Math.floor(Math.random() * this.IMAGES_BOTTLE.length);
-        this.loadImage(this.IMAGES_BOTTLE[index]);
+        if (type == 'bottle') {
+            let index = Math.floor(Math.random() * this.IMAGES_BOTTLE.length);
+            this.loadImage(this.IMAGES_BOTTLE[index]);
+        } else if (type == 'coin') {
+            this.loadImage(this.IMAGES_COIN[0]);
+        }
         this.x = 200 + Math.random() * 2150;
     }
 }

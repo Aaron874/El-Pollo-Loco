@@ -9,14 +9,22 @@ class World {
     statusbarCoin = new Statusbar('coin', 45);
     statusbarBottle = new Statusbar('bottle', 90);
     bottles = [
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables(),
-        new Collectables()
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle'),
+        new Collectables('bottle')
+    ];
+    coins = [
+        new Collectables('coin'),
+        new Collectables('coin'),
+        new Collectables('coin'),
+        new Collectables('coin'),
+        new Collectables('coin'),
+        new Collectables('coin')
     ];
     throwableObjects = [
         new ThrowableObject()
@@ -41,7 +49,8 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            this.checkCollection();
+            this.checkCollection(this.bottles, this.statusbarBottle);
+            this.checkCollection(this.coins, this.statusbarCoin);
         }, 200);
     }
 
@@ -53,25 +62,22 @@ class World {
     }
 
     checkCollisions() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusbarHealth.setPercentage(this.character.energy);
-                }
-            });
-        }, 1000);
-    }
-
-    checkCollection() {
-        this.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle) && this.statusbarBottle.bottles < 100) {
-                this.statusbarBottle.isCollected();
-                this.statusbarBottle.setPercentage(this.statusbarBottle.bottles);
-                this.bottles.splice(index, 1);
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbarHealth.setPercentage(this.character.energy);
             }
         });
-        console.log(this.statusbarBottle.bottles);
+    }
+
+    checkCollection(items, statusbar) {
+        items.forEach((item, index) => {
+            if (this.character.isColliding(item) && statusbar.amount < 100) {
+                statusbar.isCollected();
+                statusbar.setPercentage(statusbar.amount);
+                items.splice(index, 1);
+            }
+        });
     }
 
     // draw() wird immer wieder ausgeführt
@@ -92,6 +98,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.bottles);
+        this.addObjectsToMap(this.coins);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 

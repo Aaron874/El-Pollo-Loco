@@ -6,7 +6,7 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
-    bottles = 0;
+    amount = 0;
 
     loadImage(path) {
         this.img = new Image();
@@ -36,9 +36,9 @@ class DrawableObject {
     }
 
     isCollected() {
-        this.bottles += 20;
-        if (this.bottles > 100) {
-            this.bottles = 100;
+        this.amount += 20;
+        if (this.amount > 100) {
+            this.amount = 100;
         }
     }
 }
