@@ -26,9 +26,7 @@ class World {
         new Collectables('coin'),
         new Collectables('coin')
     ];
-    throwableObjects = [
-        new ThrowableObject()
-    ];
+    throwableObjects = [];
     drawableObject = new DrawableObject();
 
     constructor(canvas, keyboard) {
@@ -55,9 +53,11 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.statusbarBottle.amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.statusbarBottle.amount -= 20;
+            this.statusbarBottle.setPercentage(this.statusbarBottle.amount);
         }
     }
 
