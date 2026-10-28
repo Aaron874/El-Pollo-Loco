@@ -35,7 +35,6 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
         this.run();
     }
 
@@ -49,6 +48,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollection(this.bottles, this.statusbarBottle);
             this.checkCollection(this.coins, this.statusbarCoin);
+            this.checkBottleHit(this.throwableObjects);
         }, 200);
     }
 
@@ -67,6 +67,16 @@ class World {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
             }
+        });
+    }
+
+    checkBottleHit(items) {
+        items.forEach((item) => {
+            this.level.enemies.forEach((enemy) => {
+                if (!item.isBroken && enemy.isColliding(item)) {
+                    item.splash();
+                }
+            })
         });
     }
 
