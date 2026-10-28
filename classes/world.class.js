@@ -49,6 +49,7 @@ class World {
             this.checkCollection(this.bottles, this.statusbarBottle);
             this.checkCollection(this.coins, this.statusbarCoin);
             this.checkBottleHit(this.throwableObjects);
+            this.throwableObjects = this.throwableObjects.filter(b => !b.isGone);
         }, 200);
     }
 
@@ -73,7 +74,7 @@ class World {
     checkBottleHit(items) {
         items.forEach((item) => {
             this.level.enemies.forEach((enemy) => {
-                if (!item.isBroken && enemy.isColliding(item)) {
+                if (!item.isBroken && enemy.isColliding(item) && item.isInAir()) {
                     item.splash();
                 }
             })

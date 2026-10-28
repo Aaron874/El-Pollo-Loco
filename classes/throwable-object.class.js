@@ -16,6 +16,8 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
+    isGone = false;
+
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_FLYING_BOTTLE);
@@ -26,13 +28,14 @@ class ThrowableObject extends MovableObject {
         this.height = 65;
         this.throw();
         this.animate();
+        this.loadImages(['img/6_salsa_bottle/1_salsa_bottle_on_ground.png']);
     }
 
     throw() {
         this.speedY = 20;
         this.applyGravity();
         setInterval(() => {
-            if (this.y <= 350) {
+            if (this.isInAir()) {
                 this.x += 5;
             }
         }, 25);
@@ -47,11 +50,21 @@ class ThrowableObject extends MovableObject {
     animate() {
         setInterval(() => {
             if (this.isBroken) {
-                this.playAnimation(this.IMAGES_SPLASH);
-            } else {
+                if (this.currentImage < this.IMAGES_SPLASH.length) {
+                    this.playAnimation(this.IMAGES_SPLASH);
+                } else {
+                    this.isGone = true;
+                }
+            } else if (this.isInAir()) {
                 this.playAnimation(this.IMAGES_FLYING_BOTTLE);
+            } else {
+                this.img = this.imageCache['img/6_salsa_bottle/1_salsa_bottle_on_ground.png'];
             }
 
         }, 200);
+    }
+
+    isInAir() {
+        return this.y < 350; // Bodenhöhe deiner Flasche, ausprobieren
     }
 }
