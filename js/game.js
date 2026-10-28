@@ -25,8 +25,8 @@ window.addEventListener("keydown", (event) => {
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
-    if (event.keyCode == 68) {
-        keyboard.D = true;
+    if (event.keyCode == 68 && !event.repeat) {
+        world.throwBottle();
     }
 });
 

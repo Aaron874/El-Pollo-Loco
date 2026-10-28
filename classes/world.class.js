@@ -36,6 +36,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.runAlso();
     }
 
     setWorld() {
@@ -45,16 +46,32 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
             this.checkCollection(this.bottles, this.statusbarBottle);
             this.checkCollection(this.coins, this.statusbarCoin);
             this.checkBottleHit(this.throwableObjects);
-            this.throwableObjects = this.throwableObjects.filter(b => !b.isGone);
         }, 200);
     }
 
-    checkThrowObjects() {
-        if (this.keyboard.D && this.statusbarBottle.amount > 0) {
+    runAlso() {
+        setInterval(() => {
+            this.checkLandedBottles();
+            this.throwableObjects = this.throwableObjects.filter(b => !b.isGone);
+        }, 1000 / 60);
+    }
+
+    checkLandedBottles() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.hasLanded && !bottle.isGone) {
+                let collectable = new Collectables('bottle');
+                collectable.x = bottle.x;
+                this.bottles.push(collectable);
+                bottle.isGone = true;
+            }
+        });
+    }
+
+    throwBottle() {
+        if (this.statusbarBottle.amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.statusbarBottle.amount -= 20;

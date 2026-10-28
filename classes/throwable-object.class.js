@@ -34,9 +34,11 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 20;
         this.applyGravity();
-        setInterval(() => {
+        this.moveInterval = setInterval(() => {
             if (this.isInAir()) {
                 this.x += 5;
+            } else if (!this.isBroken) {
+                this.hasLanded = true;
             }
         }, 25);
     }
@@ -58,13 +60,13 @@ class ThrowableObject extends MovableObject {
             } else if (this.isInAir()) {
                 this.playAnimation(this.IMAGES_FLYING_BOTTLE);
             } else {
-                this.img = this.imageCache['img/6_salsa_bottle/1_salsa_bottle_on_ground.png'];
+                this.hasLanded = true;
             }
 
         }, 200);
     }
 
     isInAir() {
-        return this.y < 350; // Bodenhöhe deiner Flasche, ausprobieren
+        return this.y < 350;
     }
 }
