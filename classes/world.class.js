@@ -59,17 +59,6 @@ class World {
         }, 1000 / 60);
     }
 
-    checkLandedBottles() {
-        this.throwableObjects.forEach((bottle) => {
-            if (bottle.hasLanded && !bottle.isGone) {
-                let collectable = new Collectables('bottle');
-                collectable.x = bottle.x;
-                this.bottles.push(collectable);
-                bottle.isGone = true;
-            }
-        });
-    }
-
     throwBottle() {
         if (this.statusbarBottle.amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -81,7 +70,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !enemy.isDead) {
                 this.character.hit();
                 this.statusbarHealth.setPercentage(this.character.energy);
             }
@@ -93,8 +82,20 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (!item.isBroken && enemy.isColliding(item) && item.isInAir()) {
                     item.splash();
+                    enemy.isDead = true;
                 }
             })
+        });
+    }
+
+    checkLandedBottles() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.hasLanded && !bottle.isGone) {
+                let collectable = new Collectables('bottle');
+                collectable.x = bottle.x;
+                this.bottles.push(collectable);
+                bottle.isGone = true;
+            }
         });
     }
 
