@@ -49,6 +49,10 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height;
     }
 
+    isNear(mo) {
+        return  Math.abs(this.x - mo.x) < 400; 
+    }
+
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {

@@ -49,6 +49,7 @@ class World {
             this.checkCollection(this.bottles, this.statusbarBottle);
             this.checkCollection(this.coins, this.statusbarCoin);
             this.checkBottleHit(this.throwableObjects);
+            this.checkDistanceEndboss();
         }, 200);
     }
 
@@ -86,6 +87,13 @@ class World {
                 }
             })
         });
+    }
+
+    checkDistanceEndboss() {
+        let endboss = this.level.enemies[this.level.enemies.length - 1];
+        if (endboss.isNear(this.character)) {
+            endboss.isAlert = true;
+        }
     }
 
     checkLandedBottles() {

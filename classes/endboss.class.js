@@ -45,6 +45,7 @@ class Endboss extends MovableObject {
     ];
 
     isDead = false;
+    isAlert = false;
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -66,7 +67,9 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (!this.isDead) {
+            if (!this.isDead && this.isAlert) {
+                this.playAnimation(this.IMAGES_ALERT);
+            } else if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
                 this.playAnimation(this.IMAGES_DEAD);
