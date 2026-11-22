@@ -1,12 +1,19 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let startScreen;
+let ctx;
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    ctx = canvas.getContext('2d');
+    startScreen = new StartScreen('img/9_intro_outro_screens/start/startscreen_1.png', 0);
+    startScreen.img.onload = () => { startScreen.draw(ctx) };
+}
 
-    console.log('My Character is', world.character);
+function startGame() {
+    startScreen = "";
+    world = new World(canvas, keyboard);
 }
 
 window.addEventListener("keydown", (event) => {
