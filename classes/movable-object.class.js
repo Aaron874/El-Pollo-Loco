@@ -50,7 +50,7 @@ class MovableObject extends DrawableObject {
     }
 
     isNear(mo) {
-        return  Math.abs(this.x - mo.x) < 400; 
+        return  Math.abs(this.x - mo.x) < 300; 
     }
 
     hit() {

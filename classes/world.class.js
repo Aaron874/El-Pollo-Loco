@@ -93,6 +93,8 @@ class World {
         let endboss = this.level.enemies[this.level.enemies.length - 1];
         if (endboss.isNear(this.character)) {
             endboss.isAlert = true;
+        } else {
+            endboss.isAlert = false;
         }
     }
 
