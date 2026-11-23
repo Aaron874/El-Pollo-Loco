@@ -91,10 +91,15 @@ class World {
 
     checkDistanceEndboss() {
         let endboss = this.level.enemies[this.level.enemies.length - 1];
-        if (endboss.isNear(this.character)) {
+        if (endboss.isClose(this.character)) {
+            endboss.isAttacking = true;
+            endboss.isAlert = false;
+        } else if (endboss.isNear(this.character)) {
             endboss.isAlert = true;
+            endboss.isAttacking = false;
         } else {
             endboss.isAlert = false;
+            endboss.isAttacking = false;
         }
     }
 

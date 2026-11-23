@@ -2,6 +2,7 @@ class Collectables extends DrawableObject {
     y = 350;
     height = 80;
     width = 50;
+    offset = { top: 20, left: 15, right: 15, bottom: 10 };
 
     IMAGES_BOTTLE = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',

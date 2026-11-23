@@ -46,6 +46,8 @@ class Endboss extends MovableObject {
 
     isDead = false;
     isAlert = false;
+    isAttacking = false;
+    offset = { top: 70, left: 40, right: 40, bottom: 10 };
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -61,13 +63,20 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (!this.isDead && !this.isAlert) {
+            if (!this.isDead && !this.isAlert && !this.isAttacking) {
                 this.moveLeft();
             }
         }, 1000 / 60);
 
         setInterval(() => {
-            if (!this.isDead && this.isAlert) {
+            if (!this.isDead && this.isAttacking) {
+                this.playAnimation(this.IMAGES_ATTACK);
+                if (this.currentImage % this.IMAGES_ATTACK.length == 6) {
+                   this.greatLeapForward();
+                   console.log(this.currentImage % this.IMAGES_ATTACK.length); 
+                }
+                
+            } else if (!this.isDead && this.isAlert) {
                 this.playAnimation(this.IMAGES_ALERT);
             } else if (!this.isDead && !this.isAlert) {
                 this.playAnimation(this.IMAGES_WALKING);
