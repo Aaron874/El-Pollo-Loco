@@ -88,13 +88,13 @@ class World {
                     } else if (enemy instanceof Endboss) {
                         if (enemy.hits < 3) {
                             enemy.takeBottleHit();
-                        } else {
+                        } else if (enemy.isDead === false) {
                             enemy.isHurt = false;
                             enemy.isDead = true;
                             enemy.currentImage = 0;
                         }
                     }
-                    
+
                 }
             })
         });
