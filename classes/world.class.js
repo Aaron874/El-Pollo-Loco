@@ -83,7 +83,18 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (!item.isBroken && enemy.isColliding(item) && item.isInAir()) {
                     item.splash();
-                    enemy.isDead = true;
+                    if (enemy instanceof Chicken) {
+                        enemy.isDead = true;
+                    } else if (enemy instanceof Endboss) {
+                        if (enemy.hits < 3) {
+                            enemy.takeBottleHit();
+                        } else {
+                            enemy.isHurt = false;
+                            enemy.isDead = true;
+                            enemy.currentImage = 0;
+                        }
+                    }
+                    
                 }
             })
         });

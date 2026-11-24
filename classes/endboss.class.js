@@ -47,6 +47,8 @@ class Endboss extends MovableObject {
     isDead = false;
     isAlert = false;
     isAttacking = false;
+    hits = 0;
+    isHurt = false;
     offset = { top: 70, left: 40, right: 40, bottom: 10 };
 
     constructor() {
@@ -69,20 +71,29 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (!this.isDead && this.isAttacking) {
-                this.playAnimation(this.IMAGES_ATTACK);
-                if (this.currentImage % this.IMAGES_ATTACK.length == 6) {
-                   this.greatLeapForward();
-                   console.log(this.currentImage % this.IMAGES_ATTACK.length); 
+            if (!this.isDead && this.isHurt && this.currentImage < this.IMAGES_HURT.length) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else
+                if (!this.isDead && this.isAttacking) {
+                    this.playAnimation(this.IMAGES_ATTACK);
+                    if (this.currentImage % this.IMAGES_ATTACK.length === 6) {
+                        this.greatLeapForward();
+                        console.log(this.currentImage % this.IMAGES_ATTACK.length);
+                    }
+
+                } else if (!this.isDead && this.isAlert) {
+                    this.playAnimation(this.IMAGES_ALERT);
+                } else if (!this.isDead && !this.isAlert) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                } else if (this.isDead && this.currentImage < this.IMAGES_DEAD.length) {
+                    this.playAnimation(this.IMAGES_DEAD);
                 }
-                
-            } else if (!this.isDead && this.isAlert) {
-                this.playAnimation(this.IMAGES_ALERT);
-            } else if (!this.isDead && !this.isAlert) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
         }, 200);
+    }
+
+    takeBottleHit() {
+        this.hits += 1;
+        this.isHurt = true;
+        this.currentImage = 0;
     }
 }
