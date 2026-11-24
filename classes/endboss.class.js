@@ -87,6 +87,7 @@ class Endboss extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                 } else if (this.isDead && this.currentImage < this.IMAGES_DEAD.length) {
                     this.playAnimation(this.IMAGES_DEAD);
+                    this.applyGravityEndboss();
                 }
         }, 200);
     }
@@ -95,5 +96,12 @@ class Endboss extends MovableObject {
         this.hits += 1;
         this.isHurt = true;
         this.currentImage = 0;
+    }
+
+    applyGravityEndboss() {
+        setInterval(() => {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }, 1000 / 25);
     }
 }
