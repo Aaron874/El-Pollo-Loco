@@ -159,8 +159,14 @@ class World {
 
         let self = this;
         requestAnimationFrame(function () {
-            self.draw();
+            if (!self.isGameOver()) {
+                self.draw();
+            }
         });
+    }
+
+    isGameOver() {
+        return this.character.isDead();
     }
 
     addToMap(mo) {

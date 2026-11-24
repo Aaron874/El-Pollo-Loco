@@ -3,11 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let startScreen;
 let ctx;
+let endScreen;
 
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-    startScreen = new StartScreen('img/9_intro_outro_screens/start/startscreen_1.png', 0);
+    startScreen = new NewScreen('img/9_intro_outro_screens/start/startscreen_1.png', 0);
     startScreen.img.onload = () => { startScreen.draw(ctx) };
 }
 
@@ -15,6 +16,18 @@ function startGame() {
     startScreen = "";
     world = new World(canvas, keyboard);
 }
+
+function gameOver() {
+    canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+    world = "";
+    endScreen = new NewScreen('img/You won, you lost/Game over A.png', 0);
+    endScreen.draw(ctx);
+}
+
+// function youWon() {
+
+// }
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {

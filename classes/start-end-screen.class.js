@@ -1,4 +1,4 @@
-class StartScreen extends DrawableObject {
+class NewScreen extends DrawableObject {
     width = 720;
     height = 480;
 
