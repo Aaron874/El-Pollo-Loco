@@ -18,16 +18,13 @@ function startGame() {
 }
 
 function gameOver() {
-    canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-    world = "";
     endScreen = new NewScreen('img/You won, you lost/Game over A.png', 0);
     endScreen.draw(ctx);
 }
 
-// function youWon() {
+function youWon() {
 
-// }
+}
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
